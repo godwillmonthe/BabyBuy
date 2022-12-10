@@ -39,13 +39,12 @@ public class Update extends AppCompatActivity {
     private String taskID;
 
     private StorageTask uploadTask;
+    SweetAlertDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
-
-        Intent intent = getIntent();
 
         Intent intentE = getIntent();
         taskID = intentE.getStringExtra("EntryID");
@@ -66,6 +65,10 @@ public class Update extends AppCompatActivity {
         taskDate = findViewById(R.id.update_Date);
         back = findViewById(R.id.updateBackButton);
 
+        pDialog = new SweetAlertDialog(Update.this, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#9A95F3"));
+        pDialog.setCancelable(false);
+
 
         postButton = findViewById(R.id.updateBtn);
 
@@ -73,6 +76,10 @@ public class Update extends AppCompatActivity {
 
         //setting the values of the widgets to the values of the task
         postButton.setOnClickListener(v -> {
+
+            pDialog.setTitleText("Updating Task");
+            pDialog.show();
+
             if (uploadTask != null && uploadTask.isInProgress()) {
                 Toast.makeText(getApplicationContext(), "Upload in progress...", Toast.LENGTH_SHORT).show();
 
@@ -127,17 +134,21 @@ public class Update extends AppCompatActivity {
                 map.put("taskDescription", taskDescription.getText().toString());
                 map.put("taskDate", taskDate.getText().toString());
                 databaseReference.updateChildren(map).addOnSuccessListener(aVoid -> {
-                    SweetAlertDialog pDialog = new SweetAlertDialog(Update.this, SweetAlertDialog.PROGRESS_TYPE);
-                    pDialog.getProgressHelper().setBarColor(Color.parseColor("#9A95F3"));
-                    pDialog.setTitleText("Updating Item Details");
-                    pDialog.setCancelable(true);
-                    pDialog.show();
-                    Toast.makeText(getApplicationContext(), "Update Successful", Toast.LENGTH_LONG).show();
+//                    SweetAlertDialog pDialog = new SweetAlertDialog(Update.this, SweetAlertDialog.PROGRESS_TYPE);
+//                    pDialog.getProgressHelper().setBarColor(Color.parseColor("#9A95F3"));
+//                    pDialog.setTitleText("Updating Item Details");
+//                    pDialog.setCancelable(true);
+//                    pDialog.show();
+//                    Toast.makeText(getApplicationContext(), "Update Successful", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
+                    pDialog.dismissWithAnimation();
                     finish();
                 })
-                        .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Update Unsuccessful!", Toast.LENGTH_LONG).show());
+                        .addOnFailureListener(e -> {
+                            pDialog.dismissWithAnimation();
+                            Toast.makeText(getApplicationContext(), "Update Unsuccessful!", Toast.LENGTH_LONG).show();
+                        });
             }));
         }
         else {
@@ -146,12 +157,16 @@ public class Update extends AppCompatActivity {
             map.put("taskDescription", taskDescription.getText().toString());
             map.put("taskDate", taskDate.getText().toString());
             databaseReference.updateChildren(map).addOnSuccessListener(aVoid -> {
-                Toast.makeText(getApplicationContext(), "Update Successful", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "Update Successful", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
+                pDialog.dismissWithAnimation();
                 finish();
             })
-                    .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Update Unsuccessful!!", Toast.LENGTH_LONG).show());
+                    .addOnFailureListener(e -> {
+                        pDialog.dismissWithAnimation();
+                        Toast.makeText(getApplicationContext(), "Update Unsuccessful!!", Toast.LENGTH_LONG).show();
+                    });
         }
     }
 }

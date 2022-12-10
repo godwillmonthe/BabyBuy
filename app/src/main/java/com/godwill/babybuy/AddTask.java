@@ -2,17 +2,14 @@ package com.godwill.babybuy;
 
 import static android.app.Activity.RESULT_OK;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -22,42 +19,35 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
-import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Objects;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class AddTask extends Fragment {
 
     private static final int PICK_IMAGE_REQUST = 1;
-    EditText entryName, entryDescription;
-    Button postButton;
-    ImageView productImage;
+    EditText taskName, taskDescription;
+    Button addTaskButton;
+    ImageView taskImage;
 
     DatabaseReference databaseReference;
     StorageReference storageReference;
-    private FirebaseAuth mAuth;
     private Uri imageUri;
     private StorageTask uploadTask;
-    private Calendar calendar;
-    private SimpleDateFormat dateFormat;
     private String date;
+    SweetAlertDialog pDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,28 +61,33 @@ public class AddTask extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
 
 
-        dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         date = dateFormat.format(calendar.getTime());
 
+        pDialog = new SweetAlertDialog(requireContext(), SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#9A95F3"));
+        pDialog.setCancelable(false);
 
         //Database initialisation
-        mAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Active Tasks").child(mAuth.getCurrentUser().getUid());
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Active Tasks").child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
         storageReference = FirebaseStorage.getInstance().getReference("Images").child(mAuth.getCurrentUser().getUid());
 
         //initialisation of widgets
-        productImage = view.findViewById(R.id.entryImage1);
+        taskImage = view.findViewById(R.id.entryImage1);
 
-        entryName = view.findViewById(R.id.name);
-        entryDescription = view.findViewById(R.id.description);
+        taskName = view.findViewById(R.id.name);
+        taskDescription = view.findViewById(R.id.description);
 //        buttons
-        postButton = view.findViewById(R.id.addEntry);
-        postButton.setOnClickListener(v -> {
+        addTaskButton = view.findViewById(R.id.addEntry);
+        addTaskButton.setOnClickListener(v -> {
+            pDialog.setTitleText("Adding Task ...");
+            pDialog.show();
             if (uploadTask != null && uploadTask.isInProgress()) {
-                Toast.makeText(getActivity().getApplicationContext(), "Still uploading please wait", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireActivity().getApplicationContext(), "Still uploading please wait", Toast.LENGTH_SHORT).show();
 
             } else {
                 postToDatabase();
@@ -100,7 +95,7 @@ public class AddTask extends Fragment {
         });
 
         //can tap on the image
-        productImage.setOnClickListener(v -> openFileChooser());
+        taskImage.setOnClickListener(v -> openFileChooser());
     }
 
     private void openFileChooser() {
@@ -112,14 +107,14 @@ public class AddTask extends Fragment {
 
     private void postToDatabase() {
         if (imageUri != null) {
-            final StorageReference store = storageReference.child(System.currentTimeMillis() + "." + getFileExtenstion(imageUri));
+            final StorageReference store = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
 
             uploadTask = store.putFile(imageUri).addOnCompleteListener(task -> store.getDownloadUrl().addOnSuccessListener(uri -> {
                 String entryImage = uri.toString().trim();
                 String uniquekey = databaseReference.push().getKey();
                 String entryDate = date;
-                String entryname = entryName.getText().toString().trim();
-                String entrydescription = entryDescription.getText().toString().trim();
+                String entryname = taskName.getText().toString().trim();
+                String entrydescription = taskDescription.getText().toString().trim();
 
 
                 HashMap<String, Object> item = new HashMap<>();
@@ -132,24 +127,25 @@ public class AddTask extends Fragment {
 
 
                 databaseReference.child(uniquekey).setValue(item).addOnSuccessListener(aVoid -> {
-                    SweetAlertDialog pDialog = new SweetAlertDialog(getContext(), SweetAlertDialog.PROGRESS_TYPE);
-                    pDialog.getProgressHelper().setBarColor(Color.parseColor("#9A95F3"));
-                    pDialog.setTitleText("Loading your Items...");
-                    pDialog.setCancelable(true);
-                    pDialog.show();
-                    Toast.makeText(getContext(), "Posted", Toast.LENGTH_LONG).show();
+//                    SweetAlertDialog pDialog = new SweetAlertDialog(getContext(), SweetAlertDialog.PROGRESS_TYPE);
+//                    pDialog.getProgressHelper().setBarColor(Color.parseColor("#9A95F3"));
+//                    pDialog.setTitleText("Loading your Items...");
+//                    pDialog.setCancelable(true);
+//                    pDialog.show();
                     Intent intent = new Intent(getContext(), MainActivity.class);
                     startActivity(intent);
+                    pDialog.dismiss();
                 });
             }));
 
         } else {
             Toast.makeText(getContext(), "No image selected", Toast.LENGTH_SHORT).show();
+            pDialog.dismiss();
         }
     }
 
-    private String getFileExtenstion(Uri imageUri) {
-        return MimeTypeMap.getSingleton().getExtensionFromMimeType(getContext().getContentResolver().getType(imageUri));
+    private String getFileExtension(Uri imageUri) {
+        return MimeTypeMap.getSingleton().getExtensionFromMimeType(requireContext().getContentResolver().getType(imageUri));
     }
 
     @Override
@@ -158,10 +154,10 @@ public class AddTask extends Fragment {
 
         if (requestCode == PICK_IMAGE_REQUST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
-            productImage.setImageURI(imageUri);
+            taskImage.setImageURI(imageUri);
         } else {
-            Toast.makeText(getActivity().getApplicationContext(), "Try Again later", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
+            Toast.makeText(requireActivity().getApplicationContext(), "Try Again later", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(requireActivity().getApplicationContext(), MainActivity.class));
         }
     }
 }

@@ -15,7 +15,6 @@ import java.util.TimerTask;
 
 public class Splash extends AppCompatActivity {
 
-    private static int SPLASH_TIME_OUT = 5000;
     FirebaseAuth mAuth;
 
     @Override
@@ -45,9 +44,10 @@ public class Splash extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        Timer timer = new Timer();
+        int SPLASH_TIME_OUT = 3000;
         if (currentUser == null) {
             // No user is signed in
-            Timer timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -59,9 +59,15 @@ public class Splash extends AppCompatActivity {
             }, SPLASH_TIME_OUT);
         } else {
             // User logged in
-            Intent intent = new Intent(Splash.this, MainActivity.class);
-            startActivity(intent);
-            finish();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    // TODO Auto-generated method stub
+                    Intent intent = new Intent(Splash.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }, SPLASH_TIME_OUT);
         }
     }
 }

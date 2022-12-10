@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -18,8 +18,9 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Active Tasks"
+            android:fontFamily="@font/nunito_regular"
             android:textColor="@color/menu_text_color"
-            android:textSize="27sp" />
+            android:textSize="24sp" />
     </LinearLayout>
 
     <TextView
@@ -30,6 +31,7 @@
         android:fontFamily="@font/nunito_regular"
         android:gravity="center_horizontal"
         android:text="No Tasks Available"
+        android:textColor="@color/menu_background_color"
         android:textStyle="bold"
         android:visibility="invisible" />
 

@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.BabyBuy" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/background_color</item>
-        <item name="colorPrimaryVariant">@color/background_color</item>
+        <item name="colorPrimary">@color/blueish_purple</item>
+        <item name="colorPrimaryVariant">@color/blueish_purple</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>

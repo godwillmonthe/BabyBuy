@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/nav_background_color"
+    android:background="@color/blueish_purple"
     tools:context=".SignUp">
 
     <LinearLayout
@@ -36,7 +36,7 @@
                 android:text="Up"
                 android:layout_marginStart="10dp"
                 android:textSize="30sp"
-                android:textColor="@color/menu_background_color"/>
+                android:textColor="@color/background_color"/>
         </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:text="Full Names"
                     android:textSize="12sp"
-                    android:textColor="#80ffffff"/>
+                    android:textColor="@color/menu_text_color"/>
                 <EditText
                     android:id="@+id/fullNames"
                     android:layout_width="match_parent"
@@ -124,7 +124,7 @@
                     android:layout_height="wrap_content"
                     android:text="Username"
                     android:textSize="12sp"
-                    android:textColor="#80ffffff"/>
+                    android:textColor="@color/menu_text_color"/>
                 <EditText
                     android:id="@+id/username_input_signup"
                     android:layout_width="match_parent"
@@ -177,7 +177,7 @@
                     android:layout_height="wrap_content"
                     android:text="Email Address"
                     android:textSize="12sp"
-                    android:textColor="#80ffffff"/>
+                    android:textColor="@color/menu_text_color"/>
                 <EditText
                     android:id="@+id/email_input_signup"
                     android:layout_width="match_parent"
@@ -230,7 +230,7 @@
                     android:layout_height="wrap_content"
                     android:text="Password"
                     android:textSize="12sp"
-                    android:textColor="#80ffffff"/>
+                    android:textColor="@color/menu_text_color"/>
                 <EditText
                     android:id="@+id/password_input_signup"
                     android:layout_width="match_parent"
@@ -265,6 +265,7 @@
             android:layout_marginHorizontal="20dp"
             android:background="@drawable/round_back_secondary_2_100"
             android:text="Sign Up"
+            android:backgroundTint="@color/background_color"
             android:textColor="@color/menu_text_color"
             android:textStyle="bold"/>
     </LinearLayout>
@@ -300,7 +301,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sign In"
-                android:textColor="@color/menu_background_color"
+                android:textColor="@color/background_color"
                 android:textSize="16sp"
                 android:layout_marginTop="5dp"
                 android:textStyle="bold"/>

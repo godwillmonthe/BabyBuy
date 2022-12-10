@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#3e526a"
+    android:background="@drawable/background"
     tools:context=".Update">
 
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
+        android:background="@drawable/recyclerview_bg"
+        android:paddingHorizontal="20dp"
         >
 
         <LinearLayout
@@ -31,6 +31,7 @@
                 >
                 <ImageView
                     android:id="@+id/updateBackButton"
+                    android:background="@drawable/round_back_button"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/back_btn"
@@ -44,7 +45,7 @@
                     android:gravity="start"
                     android:layout_gravity="center"
                     android:text="Update Task Details"
-                    android:textColor="@color/menu_background_color"
+                    android:textColor="@color/blueish_purple"
                     android:textSize="27sp"
                     />
             </LinearLayout>
@@ -162,12 +163,11 @@
                 android:id="@+id/updateBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button"
+                android:background="@drawable/round_back_secondary_2_100"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:text="Update Task"
                 android:layout_gravity="center"
-                app:backgroundTint="@color/menu_background_color"
                 android:textColor="#FFFFFF" />
 
 

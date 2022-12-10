@@ -4,13 +4,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#3e526a"
+    android:background="@color/blueish_purple"
     tools:context=".AddTask">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="14dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add New Task"
+            android:fontFamily="@font/nunito_regular"
+            android:textSize="24sp"
+            android:textColor="@color/menu_text_color"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"
+            />
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
+        android:background="@drawable/recyclerview_bg"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         >
@@ -23,17 +53,6 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginRight="20dp"
-                android:fontFamily="@font/nunito_regular"
-                android:text="New Task"
-                android:textColor="@color/menu_background_color"
-                android:textSize="27sp"
-                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -41,8 +60,10 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="30dp"
+                android:gravity="center"
+                android:textSize="16sp"
                 android:fontFamily="@font/nunito_regular"
-                android:text="Create a add new baby task with us today"
+                android:text="Create a new task with us today"
                 android:textColor="@color/menu_text_color" />
 
             <androidx.cardview.widget.CardView
@@ -59,7 +80,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
-                    android:background="@color/menu_background_color"
+                    android:background="@color/blueish_purple"
                     android:scaleType="fitCenter"
                     android:src="@drawable/image" />
 
@@ -126,20 +147,20 @@
                 android:textSize="14sp" />
 
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/addEntry"
-                android:layout_width="match_parent"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Add New Task"
                 android:background="@drawable/button"
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
-                app:backgroundTint="@color/menu_background_color"
+                app:backgroundTint="@color/blueish_purple"
                 android:textColor="#FFFFFF" />
 
 
         </LinearLayout>
     </ScrollView>
-
+    </LinearLayout>
 </FrameLayout>

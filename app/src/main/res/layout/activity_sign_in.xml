@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/nav_background_color"
+    android:background="@color/blueish_purple"
     tools:context=".SignIn">
 
     <LinearLayout
@@ -36,7 +36,7 @@
                 android:text="In"
                 android:layout_marginStart="10dp"
                 android:textSize="30sp"
-                android:textColor="@color/menu_background_color"/>
+                android:textColor="@color/background_color"/>
         </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:text="Email Address"
                     android:textSize="12sp"
-                    android:textColor="#80ffffff"/>
+                    android:textColor="@color/menu_text_color"/>
                 <EditText
                     android:id="@+id/email_input"
                     android:layout_width="match_parent"
@@ -124,7 +124,7 @@
                     android:layout_height="wrap_content"
                     android:text="Password"
                     android:textSize="12sp"
-                    android:textColor="#80ffffff"/>
+                    android:textColor="@color/menu_text_color"/>
                 <EditText
                     android:id="@+id/password_input"
                     android:layout_width="match_parent"
@@ -160,6 +160,7 @@
             android:background="@drawable/round_back_secondary_2_100"
             android:text="Sign In"
             android:textColor="@color/menu_text_color"
+            android:backgroundTint="@color/background_color"
             android:textStyle="bold"/>
     </LinearLayout>
     <RelativeLayout
@@ -194,7 +195,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sign Up"
-                android:textColor="@color/menu_background_color"
+                android:textColor="@color/background_color"
                 android:textSize="16sp"
                 android:layout_marginTop="5dp"
                 android:textStyle="bold"/>
