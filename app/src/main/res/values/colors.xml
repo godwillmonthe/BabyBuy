@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+<!--    custom colors-->
+    <color name="background_color">#3e526a</color>
+    <color name="pink">#f8a2c8</color>
+    <color name="light_green">#9aeb9d</color>
+    <color name="blue_gray">#5784ba</color>
+
+<!--    menu colors-->
+
+    <color name="nav_background_color">#481c59</color>
+    <color name="menu_background_color">#ff785b</color>
+    <color name="menu_icon_color">#fff</color>
+    <color name="menu_text_color">#fff</color>
+
+<!--Settings page colors-->
+
+    <color name="settings_icons_light">#fff</color>
+    <color name="settings_icons_dark">#000</color>
+
+    <color name="dark_mode">#6124b1</color>
+    <color name="light_mode">#f8a2c8</color>
+    <color name="notifications">#13b2c3</color>
+    <color name="private_account">#e6a326</color>
+    <color name="security">#d95f69</color>
+
+</resources>
