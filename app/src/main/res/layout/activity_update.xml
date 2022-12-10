@@ -7,10 +7,48 @@
     android:background="@drawable/background"
     tools:context=".Update">
 
+    <RelativeLayout
+        android:id="@+id/updateTaskDetailsLayout"
+        android:layout_width="match_parent"
+        android:padding="5dp"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:id="@+id/updateBackButton"
+                android:background="@drawable/round_back_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/back_btn"
+                android:padding="14dp"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center"
+                android:text="Update Task Details"
+                android:textColor="@color/menu_text_color"
+                android:textSize="24sp"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/updateTaskDetailsLayout"
         android:background="@drawable/recyclerview_bg"
         android:paddingHorizontal="20dp"
         >
@@ -22,39 +60,11 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                >
-                <ImageView
-                    android:id="@+id/updateBackButton"
-                    android:background="@drawable/round_back_button"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/back_btn"
-                    android:padding="14dp"
-                    />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="start"
-                    android:layout_gravity="center"
-                    android:text="Update Task Details"
-                    android:textColor="@color/blueish_purple"
-                    android:textSize="27sp"
-                    />
-            </LinearLayout>
-
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"

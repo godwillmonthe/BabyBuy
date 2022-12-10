@@ -115,7 +115,8 @@ public class Update extends AppCompatActivity {
 
         if (requestCode == PICK_IMAGE_REQUST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
-            taskImage.setImageURI(imageUri);
+            Picasso.get().load(imageUri).resize(3000, 2500).into(taskImage);
+//            taskImage.setImageURI(imageUri);
         } else {
             Toast.makeText(getApplicationContext(), "Try Again later", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(getApplicationContext(), MainActivity.class));

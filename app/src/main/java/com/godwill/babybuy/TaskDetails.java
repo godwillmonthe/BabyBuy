@@ -28,11 +28,9 @@ public class TaskDetails extends AppCompatActivity {
 
     TextView taskName, taskDesc, taskDate;
     ImageView taskImage, back;
-    ImageButton share,edit;
-    Button purchase, delete;
+    ImageButton share,edit, purchase, delete;
     DatabaseReference databaseReference, purchasedReference, deleteReference;
     FirebaseUser firebaseUser;
-    private FirebaseAuth mAuth;
     StorageReference storageReference;
 
     @Override
@@ -41,7 +39,7 @@ public class TaskDetails extends AppCompatActivity {
         setContentView(R.layout.activity_task_details);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         purchasedReference = FirebaseDatabase.getInstance().getReference("Completed Tasks").child(mAuth.getCurrentUser().getUid());
         deleteReference = FirebaseDatabase.getInstance().getReference("Deleted Tasks").child(mAuth.getCurrentUser().getUid());
         databaseReference = FirebaseDatabase.getInstance().getReference("Active Tasks").child(mAuth.getCurrentUser().getUid());
@@ -72,41 +70,16 @@ public class TaskDetails extends AppCompatActivity {
         taskDesc.setText(description);
         taskDate.setText(date);
         if (isPurchased) {
-            purchase.setText("Purchased");
+            purchase.setBackgroundResource(R.drawable.done);
             purchase.setEnabled(false);
         }
-        else {
-            purchase.setText("Not Purchased");
-            purchase.setEnabled(true);
-        }
-        Picasso.get().load(image).into(taskImage);
+        Picasso.get().load(image).resize(3000, 2500).into(taskImage);
 
         back.setOnClickListener(v -> finish());
 
         delete.setOnClickListener(v -> {
             // 2. Confirmation message
-            new SweetAlertDialog(TaskDetails.this, SweetAlertDialog.WARNING_TYPE)
-                    .setTitleText("Are you sure?")
-                    .setContentText("Are you sure you want to delete this item")
-                    .setConfirmText("Delete!")
-                    .setConfirmClickListener(sDialog -> {
-                        sDialog.dismissWithAnimation();
-                        HashMap<String, Object> map = new HashMap<>();
-                        map.put("entryId", entryId);
-                        map.put("Date", date);
-                        map.put("Description", description);
-                        map.put("Image", image);
-                        map.put("Name", name);
-
-                        deleteReference.child(entryId).setValue(map).addOnSuccessListener(aVoid -> databaseReference.child(entryId).removeValue().addOnSuccessListener(aVoid1 -> {
-                            Toast.makeText(getApplicationContext(), "Successfully Deleted", Toast.LENGTH_LONG).show();
-                            Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent1);
-                        }));
-
-                    })
-                    .setCancelButton("Cancel", sDialog -> sDialog.dismissWithAnimation())
-                    .show();
+            deleteTask(entryId, name, image, description, date);
 
         });
 
@@ -115,7 +88,7 @@ public class TaskDetails extends AppCompatActivity {
             new SweetAlertDialog(TaskDetails.this, SweetAlertDialog.WARNING_TYPE)
                     .setTitleText("Are you sure?")
                     .setContentText("Are you sure you want mark this item as purchased?")
-                    .setConfirmText("Purchase!")
+                    .setConfirmText("Purchase")
                     .setConfirmClickListener(sDialog -> {
                         sDialog.dismissWithAnimation();
                         HashMap<String, Object> map = new HashMap<>();
@@ -132,7 +105,7 @@ public class TaskDetails extends AppCompatActivity {
                         }));
 
                     })
-                    .setCancelButton("Cancel", sDialog -> sDialog.dismissWithAnimation())
+                    .setCancelButton("Cancel", SweetAlertDialog::dismissWithAnimation)
                     .show();
 
         });
@@ -157,5 +130,30 @@ public class TaskDetails extends AppCompatActivity {
             Intent shareIntent = Intent.createChooser(sendIntent, null);
             startActivity(shareIntent);
         });
+    }
+
+    public void deleteTask(String entryId, String name, String image, String description, String date) {
+        new SweetAlertDialog(TaskDetails.this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Are you sure?")
+                .setContentText("Are you sure you want to delete this item")
+                .setConfirmText("Delete")
+                .setConfirmClickListener(sDialog -> {
+                    sDialog.dismissWithAnimation();
+                    HashMap<String, Object> map = new HashMap<>();
+                    map.put("entryId", entryId);
+                    map.put("Date", date);
+                    map.put("Description", description);
+                    map.put("Image", image);
+                    map.put("Name", name);
+
+                    deleteReference.child(entryId).setValue(map).addOnSuccessListener(aVoid -> databaseReference.child(entryId).removeValue().addOnSuccessListener(aVoid1 -> {
+                        Toast.makeText(getApplicationContext(), "Successfully Deleted", Toast.LENGTH_LONG).show();
+                        Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent1);
+                    }));
+
+                })
+                .setCancelButton("Cancel", sDialog -> sDialog.dismissWithAnimation())
+                .show();
     }
 }

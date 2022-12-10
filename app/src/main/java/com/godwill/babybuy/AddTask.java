@@ -27,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -154,7 +155,8 @@ public class AddTask extends Fragment {
 
         if (requestCode == PICK_IMAGE_REQUST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
-            taskImage.setImageURI(imageUri);
+            Picasso.get().load(imageUri).resize(3000, 2500).into(taskImage);
+//            taskImage.setImageURI(imageUri);
         } else {
             Toast.makeText(requireActivity().getApplicationContext(), "Try Again later", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(requireActivity().getApplicationContext(), MainActivity.class));

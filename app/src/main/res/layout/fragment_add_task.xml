@@ -81,7 +81,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
                     android:background="@color/blueish_purple"
-                    android:scaleType="fitCenter"
+                    android:scaleType="fitXY"
                     android:src="@drawable/image" />
 
 
